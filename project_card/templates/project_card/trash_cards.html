@@ -1,0 +1,59 @@
+{%extends 'project_card/base.html'%}
+<!--текущий html наследуется с шаблона base.html-->
+{% block title %} Все карточки {% endblock %}
+
+{%block content%}
+{% if cards %}
+<h1> Все карты </h1>
+
+<table class="table">
+    <thead>
+    <tr> <!--шапка таблицы перемещенных карт с корзину для удаления -->
+        <th scope="col">id</th>
+        <th scope="col">Серия</th>
+        <th scope="col">Номер</th>
+        <th scope="col">Скидка</th>
+        <th scope="col">Дата деактивации</th>
+        <th scope="col">Дата последнего использования</th>
+        <th scope="col">Статус карты</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for card in cards %}
+    <tr> <!--информация о перемещенных карт с корзину для удаления -->
+        <th scope="id">{{ card.id}}</th>
+        <td>{{ card.serial_card}}</td>
+        <td>{{ card.number_card}}</td>
+        <td>{{ card.discount}}</td>
+        <td>{{ card.date_finish_action}}</td>
+        <td>{{ card.date_last_use}}</td>
+        <td>
+            {% if card.card_status %}
+            Активна
+            {% else %}
+            Неактивна
+            {% endif %}
+        </td>
+        <td>
+            <form method="post">
+                <!--кнопка для окончательного удаления карты -->
+                <button name="id_refresh" value={{card.id}} type="submit" class="btn btn-success">Восстановить</button>
+            </form>
+        </td>
+        <td>
+            <form method="post">
+                <!--кновка для восстановления карты -->
+                <button name="delete_id" value={{card.id}} type="submit" class="btn btn-danger">Удалить</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+{% else %}
+<h1>Нет удаленных карт</h1>
+{% endif %}
+{% endblock content%}

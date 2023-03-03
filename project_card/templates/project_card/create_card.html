@@ -1,0 +1,15 @@
+{%extends 'project_card/base.html'%}
+<!--текущий html наследуется с шаблона base.html-->
+{%block content%}
+    <div class="container mt-5">
+        <h1>Новая карта</h1>
+        <!--форма создания новой карты-->
+            <form method="post">
+            <input type="text" name="serial_card" class="form-control" placeholder="Введите серию карты"> <br>
+            <input type="text" name="number_card" class="form-control" placeholder="Введите номер карты"> <br>
+            <input type="text" name="discount_card" class="form-control" placeholder="Введите скидку по карте"> <br>
+            <button type="submit" class="btn btn-success" >Добавить</button>
+        </form>
+     </div>
+
+{% endblock content%}

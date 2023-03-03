@@ -1,0 +1,116 @@
+{%extends 'project_card/base.html'%}
+<!--текущий html наследуется с шаблона base.html-->
+{% block title %} Все карточки {% endblock %}
+
+{%block content%}
+{% if card %}
+<table class="table">
+    <thead>
+    <tr> <!--шапка таблицы выбранной карты -->
+        <th scope="col">id</th>
+        <th scope="col">Серия</th>
+        <th scope="col">Номер</th>
+        <th scope="col">Скидка</th>
+        <th scope="col">Дата активации</th>
+        <th scope="col">Дата деактивации</th>
+        <th scope="col">Дата последнего использования</th>
+        <th scope="col">Статус карты</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr> <!--информация выбранной карты -->
+        <th scope="id">{{ card.id}}</th>
+        <td>{{ card.serial_card}}</td>
+        <td>{{ card.number_card}}</td>
+        <td>{{ card.discount}}</td>
+        <td>{{ card.date_start_action}}</td>
+        <td>{{ card.date_finish_action}}</td>
+        <td>{{ card.date_last_use}}</td>
+        <td>
+            {% if card.card_status %}
+            Активна
+            {% else %}
+            Неактивна
+            {% endif %}
+        </td>
+        <td>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <form method="post">
+                    <!--кнопки изменения статука карты (активна/неактивна),(удалена/нет) -->
+                    <button value="{{card.id}}" type="submit" class="btn btn-danger" name="delete" >Удалить</button>
+                    <button value="{{card.id}}" type="submit" class="btn btn-primary" name="status" >Изменить статус карты</button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<br><br>
+
+
+<h1> Заказы </h1>
+<!--отображение заказов по текущей карте--->
+{% if purchases %}
+{% for purchase in purchases %}
+<table class="table">
+    <thead>
+    <tr> <!--шапка таблицы заказов--->
+        <th scope="col">id</th>
+        <th scope="col">Дата покупки</th>
+        <th scope="col">Скидка</th>
+        <th scope="col">Итог. цена</th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr> <!--информация заказов --->
+        <th scope="id">{{ purchase.id}}</th>
+        <td>{{ purchase.date_of_purchase}}</td> <!--дата заказа --->
+        <td>{{ purchase.discount_now}}</td>  <!--текущая скидка --->
+        <td>
+            {{ (prices[purchase.id] - (prices[purchase.id] * purchase.discount_now / 100))  }}  <!--расчет цены со скидкой --->
+        </td>
+    </tr>
+
+
+    </tbody>
+</table>
+
+<table class="table table-dark table-striped" style="width:500px">
+    <thead>
+    <tr>
+        <!--шапка таблицы купленных продуктов--->
+        <th scope="col">id</th>
+        <th scope="col">Название</th>
+        <th scope="col">Цена со скидкой</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for product in products_list %}
+
+    {% if product.purchase_id == purchase.id %}
+    <tr> <!--таблицы купленных продуктов--->
+        <td>{{product.id}}</td>
+        <td>{{product.name_product}}</td> <!--наименование купленных продуктов--->
+        <td>{{ product.product_cost -product.product_cost * purchase.discount_now / 100 }}</td> <!--расчет цены со скидкой --->
+    </tr>
+    {% endif %}
+
+    {% endfor %}
+</table>
+
+
+{% endfor %}
+<br><br>
+
+
+{% else %}
+<h1>Заказов нет</h1>
+{% endif %}
+{% else %}
+<h1>Карта удалена</h1>
+{% endif %}
+{% endblock content%}

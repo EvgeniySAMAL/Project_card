@@ -1,0 +1,29 @@
+{%extends 'project_card/base.html'%}
+<!--текущий html наследуется с шаблона base.html-->
+{%block content%}
+
+    <div class="container mt-5">
+        <h1>Новый продукт</h1>
+        <!--добавление нового продукта -->
+            <form method="post">
+            <input type="text" name="name_product" class="form-control" placeholder="Введите название продукта"> <br>
+            <input type="text" name="product_cost" class="form-control" placeholder="Введите цену продукта"> <br>
+
+                <form method="post">
+                {% if purchases %}
+                    <select class="form-select" aria-label="Default select example" name="purchase_id">
+                <!--выбор заказа -->
+                    {% for purchase in purchases %}
+                        <option value={{purchase.id}}> {{purchase}}</option>
+                    {% endfor %}
+
+                     </select>
+                {% else %}
+                <h3>Нет карт</h3>
+                {% endif %}
+                <button type="submit" class="btn btn-success">Добавить</button>
+                </form>
+            </form>
+     </div>
+
+{% endblock content%}

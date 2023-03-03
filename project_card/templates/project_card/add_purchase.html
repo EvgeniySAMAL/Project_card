@@ -1,0 +1,23 @@
+{%extends 'project_card/base.html'%}
+<!--текущий html наследуется с шаблона base.html-->
+{%block content%}
+<div class="container mt-5">
+    <h1>Новая корзина</h1>
+     <!--добавление нового заказа -->
+    <form method="post">
+        {% if cards %}
+        <select class="form-select" aria-label="Default select example" name="card_id">
+            <!--выбор карты для добавление нового заказа  -->
+            {% for card in cards %}
+            <option value={{card.id}}> {{card.serial_card}} - {{card.number_card}}</option>
+            {% endfor %}
+
+        </select>
+        {% else %}
+        <h3>Нет карт</h3>
+        {% endif %}
+        <button type="submit" class="btn btn-success">Добавить</button>
+    </form>
+</div>
+
+{% endblock content%}

@@ -1,0 +1,21 @@
+{%extends 'project_card/base.html'%}
+<!--текущий html наследуется с шаблона base.html-->
+{% block title %} Все карточки {% endblock %}
+
+
+{%block content%}
+{% if info %}
+<h1>было сгенерированно {{info}} карт</h1>
+{% endif %}
+    <div class="container mt-5">
+        <h1>Новая карта/ы</h1>
+         <!--форма таблицы генерируеммых карт -->
+            <form method="post">
+            <input type="text" name="serial_card" class="form-control" placeholder="Введите серию карты"> <br>
+            <input type="text" name="amount_card" class="form-control" placeholder="Введите количество карт"> <br>
+            <input type="text" name="discount_card" class="form-control" placeholder="Введите скидку по карте/ам"> <br>
+            <button type="submit" class="btn btn-success" >Добавить</button>
+        </form>
+     </div>
+
+{% endblock content%}

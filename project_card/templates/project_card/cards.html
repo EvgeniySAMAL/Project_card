@@ -1,0 +1,52 @@
+{%extends 'project_card/base.html'%}
+<!--текущий html наследуется с шаблона base.html-->
+{% block title %} Все карточки {% endblock %}
+
+{%block content%}
+<h1> Все карты </h1>
+   <!--шапка таблицы всех карт -->
+  {% if cards %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Серия</th>
+      <th scope="col">Номер</th>
+      <th scope="col">Скидка</th>
+      <th scope="col">Дата деактивации</th>
+      <th scope="col">Дата последнего использования</th>
+      <th scope="col">Статус карты</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for card in cards %}
+  <!--отображение всех карт существующих карт с минимальной информацией о них-->
+  <tr>
+      <th scope="id">{{ card.id}}</th>
+      <td>{{ card.serial_card}}</td>
+      <td>{{ card.number_card}}</td>
+      <td>{{ card.discount}}</td>
+      <td>{{ card.date_finish_action}}</td>
+      <td>{{ card.date_last_use}}</td>
+      <td>
+          {% if card.card_status %}
+          Активна
+          {% else %}
+          Неактивна
+          {% endif %}
+      </td>
+        <td>  <div class="d-grid gap-2 col-6 mx-auto">
+            <!--переход на страницу с более развернутой информацией о выбранной карте-->
+                <a type="submit" class="btn btn-success" href="/card/{{card.id}}">Детальнее</a>
+              </div>
+        </td>
+  </tr>
+  {% endfor %}
+
+  </tbody>
+</table>
+  {% else %}
+    <h1>карты не добавлены</h1>
+  {% endif %}
+{% endblock content%}
